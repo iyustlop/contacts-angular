@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatButtonModule } from '@angular/material/button'
@@ -19,7 +19,8 @@ const MATERIAL_MODULES = [MatToolbarModule, MatIconModule, MatButtonModule]
         <mat-icon>list-alt</mat-icon>
         <span>Contacts</span>
       </a>
-      <a mat-button>
+      <span class="spacer"></span>
+      <a mat-button (click)="emitClick()">
         <mat-icon>add_box</mat-icon>
         <span>New</span>
       </a>
@@ -28,5 +29,8 @@ const MATERIAL_MODULES = [MatToolbarModule, MatIconModule, MatButtonModule]
   styles: ``
 })
 export class ToolbarComponent {
-
+  onNewContactEvent = output<void>();
+  emitClick(): void {
+    this.onNewContactEvent.emit();
+  }
 }
