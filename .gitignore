@@ -48,4 +48,4 @@ Thumbs.db
 
 .env
 
-src/environments/*.ts
+/src/environments/*.ts
