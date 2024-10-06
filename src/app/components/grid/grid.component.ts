@@ -1,5 +1,5 @@
-import { Component, input, OnInit } from '@angular/core';
-import { MatSortModule } from '@angular/material/sort';
+import { Component, input, OnInit, viewChild } from '@angular/core';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 
 const MATERIAL_MODULES = [MatTableModule, MatSortModule]
@@ -16,9 +16,11 @@ export class GridComponent<T> implements OnInit {
   data = input.required<T[]>();
 
   dataSource = new MatTableDataSource<T>();
+  private readonly _sort = viewChild.required<MatSort>(MatSort)
 
   ngOnInit(): void {
     this.dataSource.data = this.data();
+    this.dataSource.sort = this._sort();
   }
 
 }
