@@ -23,32 +23,54 @@ const contactsRoute:Routes = [
 Run `ng g c folder/component -t -s` for create a template in one file.
 
 ## Lesson 4 - how to map components
-index.html points to the app-root which is the main component of the app. app-root is the selector that is defined in app.component.ts. 
-In app.component.html the components that are defined are mapped.  
-For example app-toolbar is the component of the upper toolbar that is defined in toolbar.component.ts. 
+`index.html` points to the `app-root` which is the main component of the app. `app-root` is the selector that is defined in app.component.ts. 
+In `app.component.html` the components that are defined are mapped.  
+For example `app-toolbar` is the component of the upper toolbar that is defined in `toolbar.component.ts`.  
 
-## Lesson 5 - How to enit a click
+## Lesson 5 - How to emit a click
 In toolbar.component.ts the `emitClick()` click event is defined which triggers the onNewContactEvent event with the output of Angular 18. 
+
 In app.component.ts the implementation of the onClickNewContact event is defined. 
+
 In app.component.html we bind `(onNewContactEvent)=“onClickNewContact()”` to `(onNewContactEvent)=“onClickNewContact()”`.
 
 ## Lesson 6 - Display a Table
-We have taken a ui material board. Inside the grid component we have put the HTML and ts. 
-We take the data to the list class which is the parent where the grid is going to be placed. We define the data to be passed and the columns and we pass it in the label.
+We have taken a ui material board. Inside the grid component we have put the HTML and ts.
 
-In grid.component.ts data and displayedColumns are signals and dataSource a table imported from Material ui. we join dataSource.data with a signal data. 
+Data is injected from the `list.component.ts` which is the parent of `grid.component.*` Data and columns are injected as tags
+
+In grid.component.ts data and displayedColumns are signals and dataSource a table imported from Material ui. we join dataSource.data with a signal data. `ngOnInit` manage the data. 
+
+>[!DOCUMENTATION]
+>
+> [OnInit](https://angular.dev/api/core/OnInit)
 
 In grid.component.html we use a for loop to pass the name of the column in the header and the data in the cell.
+
+## Lesson 7 - Sort, Paginator and filter
+First, we add in `grid.component.html` the directives matSort in the table and mat-sort-header to display the arrows that allow us to sort the data by columns.
+
+>[!DOCUMENTATION]
+>
+> [viewChild](https://angular.dev/api/core/viewChild?tab=api)
+
+We use viewChild signal to access the data and use MatSort to sort it. 
+
+Everything is linked together in the ngOnInit
+
+For paginator we follow the same pattern using MatPaginator
+
+For Filter, a `<mat-form-field>`in included at the top of the page. this tag includes `<mat-label>`and one input.
+
+`(keyup)` sirve para que cada vez que pulse una tecla se produzca un evento. El evento se define en un método. Cogemos el valor en una constante y se la aplicamos a los datos con filter.
+
+## Lesson 8 - 
 
 
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
