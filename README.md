@@ -41,7 +41,7 @@ Data is injected from the `list.component.ts` which is the parent of `grid.compo
 
 In grid.component.ts data and displayedColumns are signals and dataSource a table imported from Material ui. we join dataSource.data with a signal data. `ngOnInit` manage the data. 
 
->[!DOCUMENTATION]
+>[!INFO]
 >
 > [OnInit](https://angular.dev/api/core/OnInit)
 
@@ -50,9 +50,9 @@ In grid.component.html we use a for loop to pass the name of the column in the h
 ## Lesson 7 - Sort, Paginator and filter
 First, we add in `grid.component.html` the directives matSort in the table and mat-sort-header to display the arrows that allow us to sort the data by columns.
 
->[!DOCUMENTATION]
+>[!INFO]
 >
-> [viewChild](https://angular.dev/api/core/viewChild?tab=api)
+> [viewChild](https://angular.dev/api/core/viewChild)
 
 We use viewChild signal to access the data and use MatSort to sort it. 
 
@@ -62,11 +62,19 @@ For paginator we follow the same pattern using MatPaginator
 
 For Filter, a `<mat-form-field>`in included at the top of the page. this tag includes `<mat-label>`and one input.
 
-`(keyup)` sirve para que cada vez que pulse una tecla se produzca un evento. El evento se define en un método. Cogemos el valor en una constante y se la aplicamos a los datos con filter.
+`(keyup)` is used to trigger an event every time a key is pressed. The event is defined in a method. We take the value in a constant and we apply it to the data with filter.
 
-## Lesson 8 - 
+## Lesson 8 - Encapsulate the filter
 
+>[!INFO]
+>
+> [ngModel](https://angular.dev/api/forms/NgModel)
 
+Filter HTML is moved to their own component. `ngModel` replace `keyup`. 
+
+In `grid.component.html` the label and placeholder are defined. `valueToFilter` is a signal that is injected also.
+
+To filter, `effect(()=>{},{allowSignalWrites: true})` is used in the constructor and link dataSoure.filter with valueToFilter
 
 ## Development server
 
