@@ -76,6 +76,33 @@ In `grid.component.html` the label and placeholder are defined. `valueToFilter` 
 
 To filter, `effect(()=>{},{allowSignalWrites: true})` is used in the constructor and link dataSoure.filter with valueToFilter
 
+## Lesson 9 - Buttons 
+
+Buttons are located at the end of the row under the action column. This column is not sortable and therefore we have to remove the `mat-sort-header` directive.  
+
+Like the data and column names, sortable columns are defined in `list.component.ts` and placed in your HTML. 
+
+## Leasson 10 - Consume ContactService
+
+We inject Firestore as a private variable and then define the collection variable using the FireStore variable and the name of the collection in FireStore. 
+
+`getAllContacts` is an Observable that returns the information taken from FireStore. This method is subscribed in `list.component.ts` and links the contacts with data using `tap()`.
+
+```javascript
+  getAllContacts(){
+    this._contactSvc.getAllContacts()
+    .pipe(
+      takeUntilDestroyed(this._destroyRef),
+      tap((contacts:Contact[]) => this.data = [...contacts])
+    )
+    .subscribe()
+  }
+```
+`takeUntilDestroyed(this._destroyRef),` unsuscribe 
+
+## lesson 11 - Modal 
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
