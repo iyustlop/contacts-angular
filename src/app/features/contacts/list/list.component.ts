@@ -31,13 +31,14 @@ const ELEMENT_DATA: any[] = [
   imports: [GridComponent],
   template: `
     <section>
-      <app-grid [displayedColumns]="displayedColumns" [data]="data" />
+      <app-grid [displayedColumns]="displayedColumns" [data]="data" [sortableColumns]="sortables"/>
     </section>
   `,
   styles: ``
 })
 export class ListComponent {
   data = ELEMENT_DATA;
-  displayedColumns = ['position', 'name', 'weight','symbol'];
-  
+  displayedColumns:any = ['position', 'name', 'weight', 'symbol', 'action'];
+  sortables:any = ['position', 'name', 'weight', 'symbol'];
+
 }

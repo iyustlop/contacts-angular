@@ -3,8 +3,10 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { FilterComponent } from "./filter/filter.component";
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
-const MATERIAL_MODULES = [MatTableModule, MatSortModule, MatPaginatorModule]
+const MATERIAL_MODULES = [MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule, MatIconModule]
 
 @Component({
   selector: 'app-grid',
@@ -16,6 +18,7 @@ const MATERIAL_MODULES = [MatTableModule, MatSortModule, MatPaginatorModule]
 export class GridComponent<T> implements OnInit {
   displayedColumns = input.required<string[]>();
   data = input.required<T[]>();
+  sortableColumns = input<string[]>([]);
 
   dataSource = new MatTableDataSource<T>();
 
