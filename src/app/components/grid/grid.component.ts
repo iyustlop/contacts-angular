@@ -1,10 +1,12 @@
-import { Component, effect, input, OnInit, signal, viewChild } from '@angular/core';
+import { Component, effect, inject, input, OnInit, signal, viewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { FilterComponent } from "./filter/filter.component";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { APP_CONSTANTS } from '@shared/constants';
+import { ContactService } from '@features/contacts/contacts.services';
 
 const MATERIAL_MODULES = [MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule, MatIconModule]
 
@@ -24,6 +26,7 @@ export class GridComponent<T> implements OnInit {
 
   private readonly _sort = viewChild.required<MatSort>(MatSort)
   private readonly _paginator = viewChild.required<MatPaginator>(MatPaginator)
+  private readonly _contactSvc = inject(ContactService)
   
   valueToFilter = signal('')
 
@@ -43,6 +46,14 @@ export class GridComponent<T> implements OnInit {
     this.dataSource.data = this.data();
     this.dataSource.sort = this._sort();
     this.dataSource.paginator = this._paginator();
+  }
+
+  deleteContact(id: string):void {
+    const confirmation = confirm(APP_CONSTANTS.MESSAGES.CONFIRMATION_PROMPT);
+    if (confirmation){
+      this._contactSvc.deleteContact(id)
+    }
+
   }
 
 }
