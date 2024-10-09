@@ -32,7 +32,7 @@ In toolbar.component.ts the `emitClick()` click event is defined which triggers 
 
 In app.component.ts the implementation of the onClickNewContact event is defined. 
 
-In app.component.html we bind `(onNewContactEvent)=“onClickNewContact()”` to `(onNewContactEvent)=“onClickNewContact()”`.
+In app.component.html we bind `(onNewContactEvent)=“onClickNewContact()”`.
 
 ## Lesson 6 - Display a Table
 We have taken a ui material board. Inside the grid component we have put the HTML and ts.
@@ -101,7 +101,21 @@ We inject Firestore as a private variable and then define the collection variabl
 `takeUntilDestroyed(this._destroyRef),` unsuscribe 
 
 ## lesson 11 - Modal 
+In lesson 5, we implemented `onClickNewContact()`. Now, we implement inside this method the opening of the modal. For this we first define `modal.service.ts` and inside we define two methods `openModal` and `closeModal`.
 
+In `modal.service.ts` we inject the `inject(MatDialog)` material dialog as `_dialog`. 
+
+`closeModal()` closes the modal once we close the modal after pressing submit.
+
+`openModal()` is in charge of opening the modal when we click and execute `onClickNewContact()`. `openModal()` needs three things in the signature. One of type `ComponentType<CT>` with generic type. The data and if you are editing `isEditing`. The first property is passed the `ModalComponent(modal.component.ts)` and casts the same. the second is the data type. We make that by default it is of type `Contact`. The third `isEditing` is false. All this we pass it to _dialog that we have created previously. `data` and `isEditing` we pass it inside `const config`.
+
+When `modal.component.ts` is opened, `contactForm!: FormGroup` is created and during the creation of the class, a form with the fields is created. 
+
+When the modal is filled in and the accept button is pressed, the `contact.service.ts` method `newContact(contact)` is called and displays the message that the contact has been added.
+
+To delete a contact, we start by creating an event in `grid.component.html` that calls the `deleteContact(element.id)` method. Inside this method we will use the `confirm` native to which we pass a message. In case of acceptance. the `contact.service.ts` method `deleteContact(id)` is called.
+
+To update a contact, follow the same flow. We create the event click that points to `openEditForm(element)` to which the contact is passed. In `grid.component.ts` we implement the method that opens the modal, in this case we pass `ModalComponent`, `data` and `true` because we are editing. As we have `data`, the `onSubmit()` method calls the `updateContact()` which updates the contact.
 
 ## Development server
 
