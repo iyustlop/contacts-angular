@@ -61,6 +61,10 @@ export class GridComponent<T> implements OnInit {
     this._modalSvc.openModal<ModalComponent, T>(ModalComponent, data, true)
   }
 
+  selectRow(data: T): void {
+    this.openEditForm(data)
+  }
+
   deleteContact(id: string): void {
     const confirmation = confirm(APP_CONSTANTS.MESSAGES.CONFIRMATION_PROMPT);
     if (confirmation) {
