@@ -27,10 +27,7 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     this._buildForm();
-    if (this._matDialog.isEditing){
-      this.contactForm.patchValue(this._matDialog.data);
-      this._disableForm();
-    }
+    this.contactForm.patchValue(this._matDialog.data);
   }
 
   async onSubmit(){
@@ -49,10 +46,6 @@ export class ModalComponent implements OnInit {
 
   getTitle(): string {
     return this._matDialog.data ? 'Edit Contact' : 'Add Contact';
-  }
-
-  private _disableForm(): void{
-    this.contactForm.disable();
   }
 
   private _buildForm(): void {

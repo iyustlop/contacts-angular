@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { APP_CONSTANTS } from '@shared/constants';
 import { ContactService } from '@features/contacts/contacts.services';
+import { ModalService } from '@components/modal/modal.service';
+import { ModalComponent } from '@components/modal/modal.component';
 
 const MATERIAL_MODULES = [MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule, MatIconModule]
 
@@ -27,6 +29,7 @@ export class GridComponent<T> implements OnInit {
   private readonly _sort = viewChild.required<MatSort>(MatSort)
   private readonly _paginator = viewChild.required<MatPaginator>(MatPaginator)
   private readonly _contactSvc = inject(ContactService)
+  private readonly _modalSvc = inject(ModalService)
   
   valueToFilter = signal('')
 
@@ -46,6 +49,10 @@ export class GridComponent<T> implements OnInit {
     this.dataSource.data = this.data();
     this.dataSource.sort = this._sort();
     this.dataSource.paginator = this._paginator();
+  }
+
+  openEditForm(data:T):void {
+    this._modalSvc.openModal<ModalComponent, T>(ModalComponent, data, true)
   }
 
   deleteContact(id: string):void {

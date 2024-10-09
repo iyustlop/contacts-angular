@@ -113,6 +113,10 @@ When `modal.component.ts` is opened, `contactForm!: FormGroup` is created and du
 
 When the modal is filled in and the accept button is pressed, the `contact.service.ts` method `newContact(contact)` is called and displays the message that the contact has been added.
 
+To delete a contact, we start by creating an event in `grid.component.html` that calls the `deleteContact(element.id)` method. Inside this method we will use the `confirm` native to which we pass a message. In case of acceptance. the `contact.service.ts` method `deleteContact(id)` is called.
+
+To update a contact, follow the same flow. We create the event click that points to `openEditForm(element)` to which the contact is passed. In `grid.component.ts` we implement the method that opens the modal, in this case we pass `ModalComponent`, `data` and `true` because we are editing. As we have `data`, the `onSubmit()` method calls the `updateContact()` which updates the contact.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
