@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -53,8 +53,21 @@ export class ModalComponent implements OnInit {
   private _buildForm(): void {
     this.contactForm = this._fb.nonNullable.group({
       name: ['', Validators.required],
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
       email: ['', Validators.required]
     })
   }
+}
+
+export const allowedPhoneNumber: ValidatorFn = (control: AbstractControl): ValidationErrors | null  =>{
+  const allowedNumber = 6;
+  const phoneNumber = control.value.slice(1)
+
+  if (phoneNumber!==allowedNumber){
+    return {
+      allowedNumber: 'numero no admitido'
+    }
+  }
+
+  return null
 }
