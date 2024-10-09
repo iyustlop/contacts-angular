@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { GridComponent } from '@components/grid/grid.component';
 import { ColumnKeys, Contact } from '../contacts.interface';
 import { ContactService } from '../contacts.services';
@@ -11,19 +11,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
   imports: [GridComponent],
   template: `
     <section>
-      @if(data){
-        <app-grid [displayedColumns]="displayedColumns" [data]="data" [sortableColumns]="sortables"/>
-      }
+      <app-grid [displayedColumns]="displayedColumns" [data]="contacts()" [sortableColumns]="sortables"/>
     </section>
   `,
   styles: ``
 })
-export class ListComponent implements OnInit{
-  
-  data!: Contact[];
-  displayedColumns:ColumnKeys<Contact> = ['id', 'name', 'phone', 'email', 'action'];
-  sortables:ColumnKeys<Contact> = ['id', 'name', 'phone', 'email'];
-  
+export class ListComponent implements OnInit {
+  contacts = signal<Contact[]>([]);
+
+  displayedColumns: ColumnKeys<Contact> = ['id', 'name', 'phone', 'email', 'action'];
+  sortables: ColumnKeys<Contact> = ['id', 'name', 'phone', 'email'];
+
   private readonly _contactSvc = inject(ContactService);
   private readonly _destroyRef = inject(DestroyRef)
 
@@ -31,13 +29,13 @@ export class ListComponent implements OnInit{
     this.getAllContacts()
   }
 
-  getAllContacts(){
+  getAllContacts() {
     this._contactSvc.getAllContacts()
-    .pipe(
-      takeUntilDestroyed(this._destroyRef),
-      tap((contacts:Contact[]) => this.data = [...contacts])
-    )
-    .subscribe()
+      .pipe(
+        takeUntilDestroyed(this._destroyRef),
+        tap((contacts: Contact[]) => this.contacts.set(contacts))
+      )
+      .subscribe()
   }
 
 }

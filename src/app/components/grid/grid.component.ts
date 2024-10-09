@@ -32,19 +32,23 @@ export class GridComponent<T> implements OnInit {
   private readonly _contactSvc = inject(ContactService)
   private readonly _modalSvc = inject(ModalService)
   private readonly _snackBarSvc = inject(SnackBarService)
-  
+
   valueToFilter = signal('')
 
-  constructor(){
+  constructor() {
     effect(() => {
-      if(this.valueToFilter()){
-        this.dataSource.filter = this.valueToFilter(); 
-      } 
-/*    In the exercise this block is for restore the table once the filter in clean   
-      else {
-        this.dataSource.filter = '';
-      } */
-    },{allowSignalWrites:true})
+      if (this.valueToFilter()) {
+        this.dataSource.filter = this.valueToFilter();
+      }
+      /*    In the exercise this block is for restore the table once the filter in clean   
+            else {
+              this.dataSource.filter = '';
+            } */
+
+      if (this.data()) {
+        this.dataSource.data = this.data();
+      }
+    }, { allowSignalWrites: true })
   }
 
   ngOnInit(): void {
@@ -53,17 +57,15 @@ export class GridComponent<T> implements OnInit {
     this.dataSource.paginator = this._paginator();
   }
 
-  openEditForm(data:T):void {
+  openEditForm(data: T): void {
     this._modalSvc.openModal<ModalComponent, T>(ModalComponent, data, true)
   }
 
-  deleteContact(id: string):void {
+  deleteContact(id: string): void {
     const confirmation = confirm(APP_CONSTANTS.MESSAGES.CONFIRMATION_PROMPT);
-    if (confirmation){
+    if (confirmation) {
       this._contactSvc.deleteContact(id)
       this._snackBarSvc.showSnackBar(APP_CONSTANTS.MESSAGES.CONTACT_DELETED)
     }
-
   }
-
 }
