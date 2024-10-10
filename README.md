@@ -2,6 +2,23 @@
 
 After learning REACT, I want to start with ANGULAR. This project has to get me started and learn the basic lessons.
 
+## Install Firebase
+
+1. generate environments with:
+```bash
+ng g environments
+```
+
+2. install firebase-tool global
+````bash
+npm i -g firebase-tools
+````
+add firebase 
+```bash
+ng add @angular/fire
+```
+and follow the instructions to connect to Firebase
+
 ## Lesson 1 - Env Variables
 The environment variables are not put in the .env file. they are generated with ng g environments. the concept is similar to a js property file. 
 You have to put the src/environments folder inside .gitignore.
